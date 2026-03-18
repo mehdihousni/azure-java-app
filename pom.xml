@@ -8,11 +8,13 @@
     <groupId>com.example</groupId>
     <artifactId>azure-java-app</artifactId>
     <version>1.0.0</version>
+    <packaging>jar</packaging>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.5</version>
+        <relativePath/>
     </parent>
 
     <properties>
@@ -20,6 +22,7 @@
     </properties>
 
     <dependencies>
+
         <!-- Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -39,7 +42,13 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Optional (Lombok if you want later) -->
+        <!-- 🔥 THIS IS IMPORTANT -->
+        <!-- Ensures proper executable JAR -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -47,7 +56,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.example.demo.DemoApplication</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
+
 </project>
