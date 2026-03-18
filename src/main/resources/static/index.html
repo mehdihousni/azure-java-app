@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User App</title>
+</head>
+<body>
+
+<h2>User Management</h2>
+
+<input id="name" placeholder="Name">
+<input id="email" placeholder="Email">
+<button onclick="addUser()">Add</button>
+
+<ul id="list"></ul>
+
+<script>
+const API = "/api/users";
+
+async function load() {
+    const res = await fetch(API);
+    const users = await res.json();
+
+    const list = document.getElementById("list");
+    list.innerHTML = "";
+
+    users.forEach(u => {
+        list.innerHTML += `<li>
+            ${u.name} (${u.email})
+            <button onclick="del(${u.id})">X</button>
+        </li>`;
+    });
+}
+
+async function addUser() {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+
+    await fetch(API, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({name, email})
+    });
+
+    load();
+}
+
+async function del(id) {
+    await fetch(API + "/" + id, { method: "DELETE" });
+    load();
+}
+
+load();
+</script>
+
+</body>
+</html>
